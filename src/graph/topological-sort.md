@@ -65,4 +65,11 @@ The main function of the solution is `topological_sort`, which initializes DFS v
 - [UVA #124 "Following Orders" [difficulty: easy]](https://z5h64q92x9.net/proxy_u/ru-en.en/uva.onlinejudge.org/index.php?option=onlinejudge&page=show_problem&problem=60)
 - [UVA #200 "Rare Order" [difficulty: easy]](https://z5h64q92x9.net/proxy_u/ru-en.en/uva.onlinejudge.org/index.php?option=onlinejudge&page=show_problem&problem=136)
 - [Codeforces 510C "Fox and Names" [difficulty: easy]](http://codeforces.com/problemset/problem/510/C)
-
+* [UVA - 11686 - Pick up sticks](https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=2733)
+* [LOJ - 1034 - Hit the Light Switches](http://lightoj.com/volume_showproblem.php?problem=1034)
+* [UVA 872 - Ordering](https://uva.onlinejudge.org/index.php?option=onlinejudge&page=show_problem&problem=813)
+* [UVA 11060 - Beverages](https://uva.onlinejudge.org/index.php?option=onlinejudge&page=show_problem&problem=2001)
+* [Codeforces - Tree Folding](http://codeforces.com/contest/765/problem/E)
+* [Codeforces - Online Courses in BSU](http://codeforces.com/contest/770/problem/C)
+* [Codeforces - Minimal Labels](http://codeforces.com/contest/825/problem/E)
+* [SPOJ - Repairing Road](http://www.spoj.com/problems/CODESPTI/)
