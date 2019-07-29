@@ -40,7 +40,10 @@ $$N = F_{k_1} + F_{k_2} + \ldots + F_{k_r}$$
 
 such that $k_1 \ge k_2 + 2,\ k_2 \ge k_3 + 2,\  \ldots,\  k_r \ge 2$ (i.e.: the representation cannot use two consecutive Fibonacci numbers).
 
-It follows that any number can be uniquely encoded in the Fibonacci coding, for example:
+It follows that any number can be uniquely encoded in the Fibonacci coding.
+And we can describe this representation with binary codes $d_0 d_1 d_2 \dots d_s 1$, where $d_i$ is $1$ if $F_{i+2}$ is used in the representation.
+The code will be appended by a $1$ do indicate the end of the code word.
+Notice that this is the only occurrence where two consecutive 1-bits appear.
 
 $$\begin{eqnarray}
 1 &=& 1 &=& F_2 &=& (11)_F \\\
@@ -48,10 +51,8 @@ $$\begin{eqnarray}
 6 &=& 5 + 1 &=& F_5 + F_2 &=& (10011)_F \\\
 8 &=& 8 &=& F_6 &=& (000011)_F \\\
 9 &=& 8 + 1 &=& F_6 + F_2 &=& (100011)_F \\\
-19 &=& 13 + 5 + 1 &=& F_7 + F_5 + F_2 &=& (1010011)_F
+19 &=& 13 + 5 + 1 &=& F_7 + F_5 + F_2 &=& (1001011)_F
 \end{eqnarray}$$
-
-and there are no consecutive 1-bits, except for the ending $1$ bit, which simply indicates the end of the code word.
 
 The encoding of an integer $n$ can be done with a simple greedy algorithm:
 
@@ -89,13 +90,38 @@ As these two formulas would require very high accuracy when working with fractio
 
 It is easy to prove the following relation:
 
-$$\pmatrix{F_{n-1} & F_{n} \cr} = \pmatrix{F_{n-2} & F_{n-1} \cr} \cdot \pmatrix{0 & 1 \cr 1 & 1 \cr}$$
+$$\begin{pmatrix}F_{n-1} & F_{n} \cr\end{pmatrix} = \begin{pmatrix}F_{n-2} & F_{n-1} \cr\end{pmatrix} \cdot \begin{pmatrix}0 & 1 \cr 1 & 1 \cr\end{pmatrix}$$
 
-Denoting $P \equiv \pmatrix{0 & 1 \cr 1 & 1 \cr}$, we have:
+Denoting $P \equiv \begin{pmatrix}0 & 1 \cr 1 & 1 \cr\end{pmatrix}$, we have:
 
-$$\pmatrix{F_n & F_{n+1} \cr} = \pmatrix{F_0 & F_1 \cr} \cdot P^n$$
+$$\begin{pmatrix}F_n & F_{n+1} \cr\end{pmatrix} = \begin{pmatrix}F_0 & F_1 \cr\end{pmatrix} \cdot P^n$$
 
 Thus, in order to find $F_n$, we must raise the matrix $P$ to $n$. This can be done in $O(\log n)$ (see [Binary exponentiation](./algebra/binary-exp.html)).
+
+### Fast Doubling Method
+
+Using above method we can find these equations:
+$$ \begin{array}{rll}
+                        F_{2k} &= F_k \left( 2F_{k+1} - F_{k} \right). \\\
+                        F_{2k+1} &= F_{k+1}^2 + F_{k}^2.
+\end{array}$$
+Thus using above two equations Fibonacci numbers can be calculated easily by the following code:
+
+The above code returns $F_n$ and $F_{n+1}$ as a pair.
+```cpp
+pair<int, int> fib (int n) {
+    if (n == 0)
+        return {0, 1};
+
+    auto p = fib(n >> 1);
+    int c = p.first * (2 * p.second - p.first);
+    int d = p.first * p.first + p.second * p.second;
+    if (n & 1)
+        return {d, c + d};
+    else
+        return {c, d};
+}
+```
 
 ## Periodicity modulo p
 
@@ -108,3 +134,10 @@ $$(F_1,\ F_2),\ (F_2,\ F_3),\ \ldots,\ (F_{p^2 + 1},\ F_{p^2 + 2})$$
 There can only be $p$ different remainders modulo $p$, and at most $p^2$ different remainders, so there are at least two identical pairs among them. Thus the sequence is periodic.
 
 We now choose two pairs of identical remainders with the smallest indices in the sequence. Let the pairs be $(F_a,\ F_{a + 1})$ and $(F_b,\ F_{b + 1})$. We will prove that $a = 1$. If this was false, there would be two previous pairs $(F_{a-1},\ F_a)$ and $(F_{b-1},\ F_b)$, which, by the property of Fibonacci numbers, would also be equal. However, this contradicts the fact that we had chosen pairs with the smallest indices, completing our proof.
+
+## Practice Problems
+
+* [SPOJ - Euclid Algorithm Revisited](http://www.spoj.com/problems/MAIN74/)
+* [SPOJ - Fibonacci Sum](http://www.spoj.com/problems/FIBOSUM/)
+* [HackerRank - Is Fibo](https://www.hackerrank.com/contests/codesprint5/challenges/is-fibo/problem)
+* [Project Euler - Even Fibonacci numbers](https://www.hackerrank.com/contests/projecteuler/challenges/euler002/problem)
